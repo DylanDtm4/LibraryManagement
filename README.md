@@ -1,18 +1,49 @@
-## Getting Started
+📚 Library Management App
+A simple Java-based Library Management System to practice and learn Java programming concepts. This app allows users to manage books, members, and borrowing/returning functionalities, built using core Java principles.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+🚀 Features
+Add, update, delete books
 
-## Folder Structure
+Register library members
 
-The workspace contains two folders by default, where:
+Issue and return books
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+Track availability of books
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+Console-based UI (or Swing/JavaFX if applicable)
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+Basic persistence using file I/O or in-memory storage
 
-## Dependency Management
+🛠 Technologies Used
+Java 17 (or your version)
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Object-Oriented Programming (OOP)
+
+File I/O or simple database (optional)
+
+(Optional) Java Swing/JavaFX for GUI
+
+🧠 Concepts Practiced
+Object-oriented design
+
+Java collections (ArrayList, HashMap, etc.)
+
+Encapsulation and abstraction
+
+Separation of concerns and modularization
+
+Basic persistence and file operations
+
+📌 Future Improvements
+Add database support (e.g. SQLite or MySQL)
+
+Implement user login system
+
+Improve UI with JavaFX or Swing
+
+Add overdue book tracking and fines
+
+💡 Why I Built This
+I'm learning Java and built this app to get hands-on experience with object-oriented programming, Java's syntax, and core libraries.
+
+This is just a template README for init commit
