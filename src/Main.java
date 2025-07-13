@@ -18,7 +18,7 @@ public class Main {
         while (startChoice != 3) {
             startChoice = printStartMenu(scnr);
             switch(startChoice) {
-                case 1:
+                case 1 -> {
                     System.out.println("-----------------------------------------"); // 41 -s
                     System.out.println("\tEnter your credentials");
                     System.out.println("-----------------------------------------");
@@ -27,8 +27,6 @@ public class Main {
                     username = scnr.next();
                     System.out.print("Password: ");
                     password = scnr.next();
-                    System.out.println(username);
-                    System.out.println(password);
                     if (username.equals("user") && password.equals("password")) {
                         userLogin = true;
                     } else {
@@ -41,8 +39,8 @@ public class Main {
                             userLogin = false;
                         }
                     }
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("-----------------------------------------"); // 41 -s
                     System.out.println("\tEnter your credentials");
                     System.out.println("-----------------------------------------");
@@ -51,8 +49,6 @@ public class Main {
                     username = scnr.next();
                     System.out.print("Password: ");
                     password = scnr.next();
-                    System.out.println(username);
-                    System.out.println(password);
                     if (username.equals("admin") && password.equals("password")) {
                         adminLogin = true;
                     } else {
@@ -65,12 +61,10 @@ public class Main {
                             adminLogin = false;
                         }
                     }
-                    break;
-                case 3:
-                    break;
-                default:
-                    System.out.println("Invalid value detected. Please try again.");
-                    break;
+                }
+                case 3 -> {
+                }
+                default -> System.out.println("Invalid value detected. Please try again.");
             }
             
         }
@@ -110,39 +104,39 @@ public class Main {
         int bookID;
         ArrayList<Book> checkedOutBooks;
         switch(userChoice) {
-            case 1:
+            case 1 -> {
                 bookID = getBookID(scnr);
-                for (Book book : myLibrary.listBooks) {
-                    if (book.id == bookID) {
+                for (Book book : myLibrary.getListBooks()) {
+                    if (book.getId() == bookID) {
                         System.out.println(book.toString());
                         break;
                     }
                 }
                 System.out.println("No book found with id of " + bookID);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 count = 1;
-                for (Book book: myLibrary.listBooks) {
+                for (Book book: myLibrary.getListBooks()) {
                     System.out.println(count + ". " + book.toString());
                     count++;
                 }
-                break;
-            case 3:
+            }
+            case 3 -> {
                 count = 1;
                 checkedOutBooks = user.getCheckedOutBooks();
                 for (Book book: checkedOutBooks) {
                     System.out.println(count + ". " + book.toString());
                     count++;
                 }
-                break;
-            case 4:
+            }
+            case 4 -> {
                 bookID = getBookID(scnr);
                 LocalDate dueDate = LocalDate.now().plusDays(30);
-                for (Book book : myLibrary.listBooks) {
-                    if (book.id == bookID) {
-                        book.setdueDate(dueDate);
+                for (Book book : myLibrary.getListBooks()) {
+                    if (book.getId() == bookID) {
+                        book.setDueDate(dueDate);
                         book.setCheckedOut(true);
-                        book.setCheckedOutBy(user.username);
+                        book.setCheckedOutBy(user.getUsername());
                         checkedOutBooks = user.getCheckedOutBooks();
                         checkedOutBooks.add(book);
                         user.setCheckedOutBooks(checkedOutBooks);
@@ -150,13 +144,13 @@ public class Main {
                     }
                 }
                 System.out.println("No book found with id of " + bookID);
-                break;
-            case 5:
+            }
+            case 5 -> {
                 bookID = getBookID(scnr);
                 checkedOutBooks = user.getCheckedOutBooks();
                 for (Book book: checkedOutBooks) {
-                    if (book.id == bookID) {
-                        book.setdueDate(null);
+                    if (book.getId() == bookID) {
+                        book.setDueDate(null);
                         book.setCheckedOut(false);
                         book.setCheckedOutBy("");
                         checkedOutBooks.remove(book);
@@ -165,8 +159,8 @@ public class Main {
                     }
                 }
                 System.out.println("No book found with id of " + bookID);
-                break;
-            case 6:
+            }
+            case 6 -> {
                 checkedOutBooks = user.getCheckedOutBooks();
                 for (Book book: checkedOutBooks) {
                     book.setCheckedOut(false);
@@ -174,12 +168,11 @@ public class Main {
                     checkedOutBooks.remove(book);
                     user.setCheckedOutBooks(checkedOutBooks);
                 }
-                break;
-            case 7:
+            }
+            case 7 -> {
                 return -1;
-            default: 
-                System.out.println("Invalid value detected. Please try again.");
-                break;
+            }
+            default -> System.out.println("Invalid value detected. Please try again.");
         }
         return 0;
     }
@@ -189,7 +182,7 @@ public class Main {
         System.out.println("1- Add Clerk");
         System.out.println("2- Add Librarian");
         System.out.println("3- Add Book");
-        System.out.println("4- View Issued Books History");
+        System.out.println("4- View All Issued Books in Library");
         System.out.println("5- View All Books in Library");
         System.out.println("6- Logout");
         System.out.println("-----------------------------------------\n");
@@ -201,42 +194,59 @@ public class Main {
 
     public static int handleAdminChoice(Library myLibrary, Scanner scnr, int adminChoice) {
         WorkerInfo workerInfo;
+        BookInfo bookInfo;
         String fullName;
         Map<String, Clerk> mapClerks;
         Map<String, Librarian> mapLibrarians;
+        int count;
 
         switch(adminChoice) {
-            case 1:
+            case 1 -> {
                 System.out.println("-----------------------------------------"); // 41 -s
                 System.out.println("\t\tAdd a Clerk");
                 System.out.println("-----------------------------------------");
                 workerInfo = getWorkerInfo(scnr);
                 Clerk newClerk = new Clerk(workerInfo);
-                mapClerks = myLibrary.mapClerks;
-                fullName = workerInfo.firstName + " " + workerInfo.lastName;
+                mapClerks = myLibrary.getMapClerks();
+                fullName = workerInfo.getFirstName() + " " + workerInfo.getLastName();
                 mapClerks.put(fullName, newClerk);
-                break;
-            case 2:
-            System.out.println("-----------------------------------------"); // 41 -s
+            }
+            case 2 -> {
+                System.out.println("-----------------------------------------"); // 41 -s
                 System.out.println("\t\tAdd a Librarian");
                 System.out.println("-----------------------------------------");
                 workerInfo = getWorkerInfo(scnr);
                 Librarian newLibrarian = new Librarian(workerInfo);
-                mapLibrarians = myLibrary.mapLibrarians;
-                fullName = workerInfo.firstName + " " + workerInfo.lastName;
+                mapLibrarians = myLibrary.getMapLibrarians();
+                fullName = workerInfo.getFirstName() + " " + workerInfo.getLastName();
                 mapLibrarians.put(fullName, newLibrarian);
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
+            }
+            case 3 -> {
+                System.out.println("-----------------------------------------"); // 41 -s
+                System.out.println("\t\tAdd a Book");
+                System.out.println("-----------------------------------------");
+                bookInfo = getBookInfo(scnr);
+                Book newBook = new Book(0, bookInfo, 0, null, false, "");
+                myLibrary.addBook(newBook);
+            }
+            case 4 -> {
+                count = 1;
+                for (Book book: myLibrary.getListCheckedOutBooks()) {
+                    System.out.println(count + ". " + book.issuedPrint());
+                    count++;
+                }
+            }
+            case 5 -> {
+                count = 1;
+                for (Book book: myLibrary.getListBooks()) {
+                    System.out.println(count + ". " + book.toString());
+                    count++;
+                }
+            }
+            case 6 -> {
                 return -1;
-            default: 
-                System.out.println("Invalid value detected. Please try again.");
-                break;
+            }
+            default -> System.out.println("Invalid value detected. Please try again.");
         }
         return 0;    
     }
@@ -271,6 +281,20 @@ public class Main {
         double salary = scnr.nextDouble();
         WorkerInfo workerInfo = new WorkerInfo(firstName, lastName, address, phoneNumber, salary);
         return workerInfo;
+    }
+
+    // need to add validation tests
+    public static BookInfo getBookInfo(Scanner scnr) {
+        System.out.print("Enter title: ");
+        String title = scnr.next();
+        System.out.print("Enter author: ");
+        String author = scnr.next();
+        System.out.print("Enter genre: ");
+        String genre = scnr.nextLine();
+        System.out.print("Enter number of pages: ");
+        int numPages = scnr.nextInt();
+        BookInfo bookInfo = new BookInfo(title, author, genre, numPages);
+        return bookInfo;
     }
 }   
 

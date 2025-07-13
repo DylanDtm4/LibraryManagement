@@ -1,24 +1,21 @@
-public class WorkerInfo {
+public class UserInfo {
     private String firstName;
     private String lastName;
     private String address;
     private String phoneNumber;
-    private double salary;
 
-    public WorkerInfo() {
+    public UserInfo() {
         this.firstName = "";
         this.lastName = "";
         this.address = "";
         this.phoneNumber = "";
-        this.salary = 0;
     }
 
-    public WorkerInfo(String firstName, String lastName, String address, String phoneNumber, double salary) {
+    public UserInfo(String firstName, String lastName, String address, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.salary = salary;
     }
 
     public String getFirstName() {
@@ -37,10 +34,6 @@ public class WorkerInfo {
         return this.phoneNumber;
     }
 
-    public double getSalary() {
-        return this.salary;
-    }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -55,9 +48,5 @@ public class WorkerInfo {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
     }
 }

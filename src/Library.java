@@ -1,8 +1,9 @@
 import java.util.*;
 public class Library {
-    public Map<String, Clerk> mapClerks;
-    public Map<String, Librarian> mapLibrarians;
-    public ArrayList<Book> listBooks;
+    private Map<String, Clerk> mapClerks;
+    private Map<String, Librarian> mapLibrarians;
+    private Map<String, User> mapUsers;
+    private ArrayList<Book> listBooks;
     private ArrayList<Book> listCheckedOutBooks;
 
     public Library() {
@@ -11,15 +12,32 @@ public class Library {
         this.listBooks = null;
     }
 
-    public Library(Map<String, Clerk> mapClerks, Map<String, Librarian> mapLibrarians, ArrayList<Book> listBooks, ArrayList<Book> listCheckedOutBooks) {
+    public Library(Map<String, Clerk> mapClerks, Map<String, Librarian> mapLibrarians, Map<String, User> mapUsers, ArrayList<Book> listBooks, ArrayList<Book> listCheckedOutBooks) {
         this.mapClerks = mapClerks;
         this.mapLibrarians = mapLibrarians;
+        this.mapUsers = mapUsers;
         this.listBooks = listBooks;
         this.listCheckedOutBooks = listCheckedOutBooks;
     }
 
+    public Map<String, Clerk> getMapClerks() {
+        return mapClerks;
+    }
+
+    public Map<String, Librarian> getMapLibrarians() {
+        return mapLibrarians;
+    }
+
+    public Map<String, User> getMapUsers() {
+        return mapUsers;
+    }
+
+    public ArrayList<Book> getListBooks() {
+        return listBooks;
+    }
+
     public ArrayList<Book> getListCheckedOutBooks() {
-        return this.listCheckedOutBooks;
+        return listCheckedOutBooks;
     }
             
     public void addClerk(String fullName, Clerk clerk) {
@@ -28,6 +46,10 @@ public class Library {
 
     public void addLibrarian(String fullName, Librarian librarian) {
         mapLibrarians.put(fullName, librarian);
+    }
+
+    public void addUser(String fullName, User user) {
+        mapUsers.put(fullName, user);
     }
 
     public void addBook(Book book) {
@@ -42,6 +64,10 @@ public class Library {
         mapLibrarians.remove(fullName, librarian);
     }
 
+    public void removeUser(String fullName, User user) {
+        mapUsers.remove(fullName, user);
+    }
+
     public void removeBook(Book book) {
         listBooks.remove(book);
     }
@@ -54,6 +80,10 @@ public class Library {
         this.mapLibrarians = mapLibrarians;
     }
 
+    public void setMapUsers(Map<String, User> mapUsers) {
+        this.mapUsers = mapUsers;
+    }
+
     public void setListBooks(ArrayList<Book> listBooks) {
         this.listBooks = listBooks;
     }
@@ -61,4 +91,6 @@ public class Library {
     public void setListCheckedOutBooks(ArrayList<Book> listCheckedOutBooks) {
         this.listCheckedOutBooks = listCheckedOutBooks;
     }
+
+    
 }
