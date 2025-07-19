@@ -3,19 +3,25 @@ public class Library {
     private Map<String, Clerk> mapClerks;
     private Map<String, Librarian> mapLibrarians;
     private Map<String, User> mapUsers;
+    private Map<String, Admin> mapAdmins;
     private ArrayList<Book> listBooks;
     private ArrayList<Book> listCheckedOutBooks;
 
     public Library() {
         this.mapClerks = null;
         this.mapLibrarians = null;
+        this.mapUsers = null;
+        this.mapAdmins = null;
         this.listBooks = null;
+        this.listCheckedOutBooks = null;
     }
 
-    public Library(Map<String, Clerk> mapClerks, Map<String, Librarian> mapLibrarians, Map<String, User> mapUsers, ArrayList<Book> listBooks, ArrayList<Book> listCheckedOutBooks) {
+    public Library(Map<String, Clerk> mapClerks, Map<String, Librarian> mapLibrarians, Map<String, User> mapUsers, 
+    Map<String, Admin> mapAdmins, ArrayList<Book> listBooks, ArrayList<Book> listCheckedOutBooks) {
         this.mapClerks = mapClerks;
         this.mapLibrarians = mapLibrarians;
         this.mapUsers = mapUsers;
+        this.mapAdmins = mapAdmins;
         this.listBooks = listBooks;
         this.listCheckedOutBooks = listCheckedOutBooks;
     }
@@ -92,5 +98,11 @@ public class Library {
         this.listCheckedOutBooks = listCheckedOutBooks;
     }
 
-    
+    public Map<String, Admin> getMapAdmins() {
+        return mapAdmins;
+    }
+
+    public void setMapAdmins(Map<String, Admin> mapAdmins) {
+        this.mapAdmins = mapAdmins;
+    }    
 }

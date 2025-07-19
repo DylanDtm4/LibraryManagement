@@ -4,9 +4,13 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scnr = new Scanner(System.in);
-        Library myLibrary = new Library();
-        Map<String, User> users = new HashMap<String, User>();
-        Map<String, Admin> admins = new HashMap<String, Admin>();
+        Map<String, Clerk> clerks = new HashMap<>();
+        Map<String, Librarian> librarians = new HashMap<>();
+        Map<String, User> users = new HashMap<>();
+        Map<String, Admin> admins = new HashMap<>();
+        ArrayList<Book> listBooks = new ArrayList<>();
+        ArrayList<Book> listCheckedOutBooks = new ArrayList<>();
+        Library myLibrary = new Library(clerks, librarians, users, admins, listBooks, listCheckedOutBooks);
         User user = new User();
         Admin admin = new Admin();
         int startChoice = 0;
@@ -27,7 +31,6 @@ public class Main {
                     System.out.println("-----------------------------------------"); // 41 -s
                     System.out.println("\tEnter your credentials");
                     System.out.println("-----------------------------------------");
-                    // Check credentials (currently hardcoded)
                     System.out.print("Username: ");
                     username = scnr.next();
                     System.out.print("Password: ");
@@ -46,6 +49,7 @@ public class Main {
                         userChoice = printUserMenu(scnr);
                         if (handleUserChoice(user, myLibrary, scnr, userChoice) == -1) {
                             userLogin = false;
+                            user = null;
                         }
                     }
                     break;
@@ -72,6 +76,7 @@ public class Main {
                         adminChoice = printAdminMenu(scnr);
                         if (handleAdminChoice(myLibrary, scnr, adminChoice) == -1) {
                             adminLogin = false;
+                            admin = null;
                         }
                     }
                     break;
@@ -134,6 +139,7 @@ public class Main {
     }
 
     public static int printStartMenu(Scanner scnr) {
+        System.out.println();
         System.out.println("Following functionalities are available:\n");
         System.out.println("1- Login As User");
         System.out.println("2- Login As Admin");
@@ -221,7 +227,7 @@ public class Main {
                 if (!bookFound) {
                     System.out.println("No book found with id of " + bookID);
                 }
-                if (!isCheckedOut) {
+                if (isCheckedOut) {
                     System.out.println("This book is currently checked out.");
                 }
                 break;
