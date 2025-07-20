@@ -1,3 +1,6 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class BookInfo {
     private String title;
     private String author;
@@ -49,5 +52,23 @@ public class BookInfo {
         this.numPages = numPages;
     }
 
-
+    public BookInfo getBookInfo(Scanner scnr) {
+        while (true) {
+            try {
+                scnr.nextLine();
+                System.out.print("Enter title: ");
+                String title = scnr.nextLine();
+                System.out.print("Enter author: ");
+                String author = scnr.nextLine();
+                System.out.print("Enter genre: ");
+                String genre = scnr.nextLine();
+                System.out.print("Enter number of pages: ");
+                int numPages = scnr.nextInt();
+                BookInfo bookInfo = new BookInfo(title, author, genre, numPages);
+                return bookInfo;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input detected. Please try again.");
+            }
+        }
+    }
 }

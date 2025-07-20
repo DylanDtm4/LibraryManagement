@@ -1,19 +1,16 @@
-public class Clerk {
-    private WorkerInfo workerInfo;
+public class Clerk extends Person {
+    private double salary;
 
-    public Clerk() {
-        this.workerInfo = null;
-    } 
-    
-    public Clerk(WorkerInfo workerInfo) {
-        this.workerInfo = workerInfo;
+    public Clerk(String firstName, String lastName, String address, String phoneNumber, String username, String passwordHash, double salary, Role role) {
+        super(firstName, lastName, address, phoneNumber, username, passwordHash, role);
+        this.salary = salary;
     }
 
-    public WorkerInfo getWorkerInfo() {
-        return workerInfo;
+    public double getSalary() {
+        return salary;
     }
 
-    public void setWorkerInfo(WorkerInfo workerInfo) {
-        this.workerInfo = workerInfo;
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 }

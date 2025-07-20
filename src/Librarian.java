@@ -1,19 +1,16 @@
-public class Librarian {
-    private WorkerInfo workerInfo;
+public class Librarian extends Person {
+    private double salary;
 
-    public Librarian() {
-        this.workerInfo = null;
-    } 
-    
-    public Librarian(WorkerInfo workerInfo) {
-        this.workerInfo = workerInfo;
+    public Librarian(String firstName, String lastName, String address, String phoneNumber, String username, String passwordHash, Role role, double salary) {
+        super(firstName, lastName, address, phoneNumber, username, passwordHash, role);
+        this.salary = salary;
     }
 
-    public WorkerInfo getWorkerInfo() {
-        return workerInfo;
+    public double getSalary() {
+        return salary;
     }
 
-    public void setWorkerInfo(WorkerInfo workerInfo) {
-        this.workerInfo = workerInfo;
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 }

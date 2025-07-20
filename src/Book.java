@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 public class Book {
     private int id;
     private BookInfo bookInfo;
@@ -68,5 +70,21 @@ public class Book {
 
     public String issuedPrint() {
         return String.format("%s is currently checked out by %s and it is due on %s", bookInfo.getTitle(), checkedOutBy, dueDate);
+    }
+
+    public int getBookID(Scanner scnr) {
+        int bookID;
+        while(true) {
+            System.out.print("Enter book ID: ");
+            try {
+                bookID = scnr.nextInt();
+                scnr.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a whole number");
+                scnr.nextLine();
+            }
+        }
+        return (bookID > 0) ? bookID : -1;
     }
 }
