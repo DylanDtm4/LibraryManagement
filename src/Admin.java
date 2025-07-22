@@ -7,6 +7,9 @@ public class Admin extends Person {
         super(firstName, lastName, address, phoneNumber, username, passwordHash, role);
     }
 
+    public Admin() {
+    }
+
     public int printAdminMenu(Scanner scnr) {
         System.out.println("Following functionalities are available:\n");
         System.out.println("1- Add Clerk");
@@ -24,8 +27,6 @@ public class Admin extends Person {
 
     public int handleAdminChoice(HashMap<String, Person> people, Library myLibrary, Scanner scnr, int adminChoice) {
         BookInfo bookInfo;
-        Map<String, Clerk> mapClerks;
-        Map<String, Librarian> mapLibrarians;
         int count;
 
         switch(adminChoice) {
@@ -34,8 +35,8 @@ public class Admin extends Person {
                 System.out.println("\t\tAdd a Clerk");
                 System.out.println("-----------------------------------------");
                 Clerk newClerk = Clerk.createClerk(people, scnr); 
-                mapClerks = myLibrary.getMapClerks();
-                mapClerks.put(newClerk.getUsername(), newClerk);
+                people.put(newClerk.getUsername(), newClerk);
+                myLibrary.setMapPeople(people);
                 break;
             }
             case 2 -> {
@@ -43,8 +44,8 @@ public class Admin extends Person {
                 System.out.println("\t\tAdd a Librarian");
                 System.out.println("-----------------------------------------");
                 Librarian newLibrarian = Librarian.createLibrarian(people, scnr);
-                mapLibrarians = myLibrary.getMapLibrarians();
-                mapLibrarians.put(newLibrarian.getUsername(), newLibrarian);
+                people.put(newLibrarian.getUsername(), newLibrarian);
+                myLibrary.setMapPeople(people);
                 break;
             }
             case 3 -> {

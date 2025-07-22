@@ -8,6 +8,10 @@ public class Clerk extends Person {
         this.salary = salary;
     }
 
+    public Clerk() {
+        this.salary = 0;
+    }
+
     public static Clerk createClerk(HashMap<String, Person> people, Scanner scnr) {
         Person newClerkBase = Person.createAccount(people, scnr, Role.CLERK);
         System.out.print("Enter salary: ");

@@ -1,18 +1,16 @@
-import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scnr = new Scanner(System.in);
-        Map<String, Clerk> clerks = new HashMap<>();
-        Map<String, Librarian> librarians = new HashMap<>();
-        Map<String, User> users = new HashMap<>();
-        Map<String, Admin> admins = new HashMap<>();
+        HashMap<String, Person> people = new HashMap<>();
         ArrayList<Book> listBooks = new ArrayList<>();
         ArrayList<Book> listCheckedOutBooks = new ArrayList<>();
-        Library myLibrary = new Library(clerks, librarians, users, admins, listBooks, listCheckedOutBooks);
+        Library myLibrary = new Library(people, listBooks, listCheckedOutBooks);
         User user = new User();
         Admin admin = new Admin();
+        Librarian librarian = new Librarian();
+        Clerk clerk = new Clerk();
         int startChoice = 0;
         int userChoice = 0;
         int adminChoice = 0;
@@ -28,6 +26,7 @@ public class Main {
             startChoice = printStartMenu(scnr);
             switch(startChoice) {
                 case 1 -> {
+                    User existingUser = null;
                     System.out.println("-----------------------------------------"); // 41 -s
                     System.out.println("\tEnter your credentials");
                     System.out.println("-----------------------------------------");
@@ -35,7 +34,14 @@ public class Main {
                     username = scnr.next();
                     System.out.print("Password: ");
                     password = scnr.next();
-                    User existingUser = users.get(username);
+
+                    Person person = people.get(username);
+                    if (person instanceof User user1) {
+                        existingUser = user1;
+                    } else {
+                        System.out.println("This person is not a User.");
+                    }
+
                     if (existingUser != null && BCrypt.checkpw(password, existingUser.getPasswordHash())) {
                         userLogin = true;
                         user = existingUser;                       
@@ -44,10 +50,11 @@ public class Main {
                     else {
                         System.out.println("Login failed.");
                     }
+
                     while (userLogin) {
                         System.out.println();
-                        userChoice = printUserMenu(scnr);
-                        if (handleUserChoice(user, myLibrary, scnr, userChoice) == -1) {
+                        userChoice = user.printUserMenu(scnr);
+                        if (user.handleUserChoice(user, myLibrary, scnr, userChoice) == -1) {
                             userLogin = false;
                             user = null;
                         }
@@ -55,6 +62,7 @@ public class Main {
                     break;
                 }
                 case 2 -> {
+                    Admin existingAdmin = null;
                     System.out.println("-----------------------------------------"); // 41 -s
                     System.out.println("\tEnter your credentials");
                     System.out.println("-----------------------------------------");
@@ -62,7 +70,13 @@ public class Main {
                     username = scnr.next();
                     System.out.print("Password: ");
                     password = scnr.next();
-                    Admin existingAdmin = admins.get(username);
+
+                    Person person = people.get(username);
+                    if (person instanceof Admin admin1) {
+                        existingAdmin = admin1;
+                    } else {
+                        System.out.println("This person is not a User.");
+                    }
                     if (existingAdmin != null && BCrypt.checkpw(password, existingAdmin.getPasswordHash())) {
                         adminLogin = true;
                         admin = existingAdmin;
@@ -73,8 +87,8 @@ public class Main {
                     }
                     while (adminLogin == true) {
                         System.out.println();
-                        adminChoice = printAdminMenu(scnr);
-                        if (handleAdminChoice(myLibrary, scnr, adminChoice) == -1) {
+                        adminChoice = admin.printAdminMenu(scnr);
+                        if (admin.handleAdminChoice(people, myLibrary, scnr, adminChoice) == -1) {
                             adminLogin = false;
                             admin = null;
                         }
@@ -85,22 +99,9 @@ public class Main {
                     System.out.println("-----------------------------------------"); // 41 -s
                     System.out.println("\tCreate A User Account");
                     System.out.println("-----------------------------------------");
-                    while(true) {
-                        try {
-                            System.out.println("Enter a username: ");
-                            username = scnr.next();
-                            if (!users.containsKey(username)) { break; }
-                            else { System.out.println("Username taken. Please try again."); }
-                        } catch (Exception e) {
-                            System.out.println("Invalid input detected. Please try again.");
-                        }
-                    }
-                    System.out.println("Enter a password: ");
-                    password = scnr.next();
-                    String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
-                    userInfo = getUserInfo(scnr);
-                    User newUser = new User(userInfo, new ArrayList<>(), username, passwordHash);
-                    users.put(username, newUser);
+                    User newUser = (User) Person.createAccount(people, scnr, Role.USER);
+                    people.put(newUser.getUsername(), newUser);
+                    myLibrary.setMapPeople(people);
                     System.out.println("User Account Created!");
                     break;
                 }
@@ -108,21 +109,9 @@ public class Main {
                     System.out.println("-----------------------------------------"); // 41 -s
                     System.out.println("\tCreate A Admin Account");
                     System.out.println("-----------------------------------------");
-                    while(true) {
-                        try {
-                            System.out.println("Enter a username: ");
-                            username = scnr.next();
-                            if (!admins.containsKey(username)) { break; }
-                            else { System.out.println("Username taken. Please try again."); }
-                        } catch (Exception e) {
-                            System.out.println("Invalid input detected. Please try again.");
-                        }
-                    }
-                    System.out.println("Enter a password: ");
-                    password = scnr.next();
-                    String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
-                    Admin newAdmin = new Admin(username, passwordHash);
-                    admins.put(username, newAdmin);
+                    Admin newAdmin = (Admin) Person.createAccount(people, scnr, Role.ADMIN);
+                    people.put(newAdmin.getUsername(), newAdmin);
+                    myLibrary.setMapPeople(people);
                     System.out.println("Admin Account Created!");
                     break;
                 }

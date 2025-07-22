@@ -1,41 +1,47 @@
 import java.util.*;
 public class Library {
-    private Map<String, Clerk> mapClerks;
-    private Map<String, Librarian> mapLibrarians;
-    private Map<String, User> mapUsers;
-    private Map<String, Admin> mapAdmins;
+    private Map<String, Person> mapPeople;
     private ArrayList<Book> listBooks;
     private ArrayList<Book> listCheckedOutBooks;
 
     public Library() {
-        this.mapClerks = null;
-        this.mapLibrarians = null;
-        this.mapUsers = null;
-        this.mapAdmins = null;
+        this.mapPeople = null;
         this.listBooks = null;
         this.listCheckedOutBooks = null;
     }
 
-    public Library(Map<String, Clerk> mapClerks, Map<String, Librarian> mapLibrarians, Map<String, User> mapUsers, 
-    Map<String, Admin> mapAdmins, ArrayList<Book> listBooks, ArrayList<Book> listCheckedOutBooks) {
-        this.mapClerks = mapClerks;
-        this.mapLibrarians = mapLibrarians;
-        this.mapUsers = mapUsers;
-        this.mapAdmins = mapAdmins;
+    public Library(Map<String, Person> mapPeople, ArrayList<Book> listBooks, ArrayList<Book> listCheckedOutBooks) {
+        this.mapPeople = mapPeople;
         this.listBooks = listBooks;
         this.listCheckedOutBooks = listCheckedOutBooks;
     }
 
-    public Map<String, Clerk> getMapClerks() {
-        return mapClerks;
+    public void addPerson(String username, Person person) {
+        mapPeople.put(username, person);
     }
 
-    public Map<String, Librarian> getMapLibrarians() {
-        return mapLibrarians;
+    public void removePerson(String username) {
+        mapPeople.remove(username);
     }
 
-    public Map<String, User> getMapUsers() {
-        return mapUsers;
+    public void addBook(Book book) {
+        listBooks.add(book);
+    }
+    
+    public void removeBook(Book book) {
+        listBooks.remove(book);
+    }
+
+    public void addCheckedOutBook(Book book) {
+        listCheckedOutBooks.add(book);
+    }
+    
+    public void removeCheckedOutBook(Book book) {
+        listCheckedOutBooks.remove(book);
+    }
+    
+    public Map<String, Person> getMapPeople() {
+        return mapPeople;
     }
 
     public ArrayList<Book> getListBooks() {
@@ -44,51 +50,7 @@ public class Library {
 
     public ArrayList<Book> getListCheckedOutBooks() {
         return listCheckedOutBooks;
-    }
-            
-    public void addClerk(String fullName, Clerk clerk) {
-        mapClerks.put(fullName, clerk);
-    }
-
-    public void addLibrarian(String fullName, Librarian librarian) {
-        mapLibrarians.put(fullName, librarian);
-    }
-
-    public void addUser(String fullName, User user) {
-        mapUsers.put(fullName, user);
-    }
-
-    public void addBook(Book book) {
-        listBooks.add(book);
-    }
-
-    public void removeClerk(String fullName, Clerk clerk) {
-        mapClerks.remove(fullName, clerk);
-    }
-
-    public void removeLibrarian(String fullName,Librarian librarian) {
-        mapLibrarians.remove(fullName, librarian);
-    }
-
-    public void removeUser(String fullName, User user) {
-        mapUsers.remove(fullName, user);
-    }
-
-    public void removeBook(Book book) {
-        listBooks.remove(book);
-    }
-
-    public void setMapClerks(Map<String, Clerk> mapClerks) {
-        this.mapClerks = mapClerks;
-    }
-
-    public void setMapLibrarians(Map<String, Librarian> mapLibrarians) {
-        this.mapLibrarians = mapLibrarians;
-    }
-
-    public void setMapUsers(Map<String, User> mapUsers) {
-        this.mapUsers = mapUsers;
-    }
+    }     
 
     public void setListBooks(ArrayList<Book> listBooks) {
         this.listBooks = listBooks;
@@ -98,11 +60,7 @@ public class Library {
         this.listCheckedOutBooks = listCheckedOutBooks;
     }
 
-    public Map<String, Admin> getMapAdmins() {
-        return mapAdmins;
+    public void setMapPeople(Map<String, Person> mapPeople) {
+        this.mapPeople = mapPeople;
     }
-
-    public void setMapAdmins(Map<String, Admin> mapAdmins) {
-        this.mapAdmins = mapAdmins;
-    }    
 }

@@ -9,6 +9,16 @@ public class Person {
     protected String passwordHash;
     protected Role role;
 
+    public Person() {
+        this.firstName = null;
+        this.lastName = null;
+        this.address = null;
+        this.phoneNumber = null;
+        this.username = null;
+        this.passwordHash = null;
+        this.role = null;
+    }
+
     public Person(String firstName, String lastName, String address, String phoneNumber, String username, String passwordHash, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;

@@ -8,6 +8,10 @@ public class Librarian extends Person {
         this.salary = salary;
     }
 
+    public Librarian() {
+        this.salary = 0;
+    }
+
     public static Librarian createLibrarian(HashMap<String, Person> people, Scanner scnr) {
         Person newLibrarianBase = Person.createAccount(people, scnr, Role.LIBRARIAN);
         System.out.print("Enter salary: ");

@@ -8,6 +8,10 @@ public class User extends Person{
         this.checkedOutBooks = checkedOutBooks;
     }
 
+    public User() {
+        this.checkedOutBooks = null;
+    }
+
     public ArrayList<Book> getCheckedOutBooks() {
         return checkedOutBooks;
     }
