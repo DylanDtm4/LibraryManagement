@@ -1,7 +1,9 @@
 import java.time.LocalDate;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
+
 public class Book {
+    
+
     private int id;
     private BookInfo bookInfo;
     private double rating;
@@ -31,6 +33,10 @@ public class Book {
         return id;
     }
 
+    public BookInfo getBookInfo() {
+        return bookInfo;
+    }
+    
     public double getRating() {
         return rating;
     }
@@ -45,6 +51,14 @@ public class Book {
 
     public String getCheckedOutBy() {
         return checkedOutBy;
+    }
+
+    public void setId(int id) {
+            this.id = id;
+    }
+
+    public void setBookInfo(BookInfo bookInfo) {
+            this.bookInfo = bookInfo;
     }
 
     public void setRating(double rating) {
@@ -72,7 +86,7 @@ public class Book {
         return String.format("%s is currently checked out by %s and it is due on %s", bookInfo.getTitle(), checkedOutBy, dueDate);
     }
 
-    public int getBookID(Scanner scnr) {
+    public static int getBookID(Scanner scnr) {
         int bookID;
         while(true) {
             System.out.print("Enter book ID: ");

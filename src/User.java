@@ -36,11 +36,11 @@ public class User extends Person{
         int bookID;
         boolean bookFound;
         boolean isCheckedOut;
-        ArrayList<Book> checkedOutBooks;
+        ArrayList<Book> choiceCheckedOutBooks;
         switch(userChoice) {
             case 1 -> {
                 bookFound = false;
-                bookID = getBookID(scnr);
+                bookID = Book.getBookID(scnr);
                 for (Book book : myLibrary.getListBooks()) {
                     if (book.getId() == bookID) {
                         System.out.println(book.toString());
@@ -63,8 +63,8 @@ public class User extends Person{
             }
             case 3 -> {
                 count = 1;
-                checkedOutBooks = user.getCheckedOutBooks();
-                for (Book book: checkedOutBooks) {
+                choiceCheckedOutBooks = user.getCheckedOutBooks();
+                for (Book book: choiceCheckedOutBooks) {
                     System.out.println(count + ". " + book.toString());
                     count++;
                 }
@@ -73,7 +73,7 @@ public class User extends Person{
             case 4 -> {
                 bookFound = false;
                 isCheckedOut = false;
-                bookID = getBookID(scnr);
+                bookID = Book.getBookID(scnr);
                 LocalDate dueDate = LocalDate.now().plusDays(30);
                 for (Book book : myLibrary.getListBooks()) {
                     if (book.getId() == bookID && book.isCheckedOut() == true) isCheckedOut = true;
@@ -81,9 +81,9 @@ public class User extends Person{
                         book.setDueDate(dueDate);
                         book.setCheckedOut(true);
                         book.setCheckedOutBy(user.getUsername());
-                        checkedOutBooks = user.getCheckedOutBooks();
-                        checkedOutBooks.add(book);
-                        user.setCheckedOutBooks(checkedOutBooks);
+                        choiceCheckedOutBooks = user.getCheckedOutBooks();
+                        choiceCheckedOutBooks.add(book);
+                        user.setCheckedOutBooks(choiceCheckedOutBooks);
                         bookFound = true;
                         break;
                     }
@@ -98,9 +98,9 @@ public class User extends Person{
             }
             case 5 -> {
                 bookFound = false;
-                bookID = getBookID(scnr);
-                checkedOutBooks = user.getCheckedOutBooks();
-                Iterator<Book> iter = checkedOutBooks.iterator();
+                bookID = Book.getBookID(scnr);
+                choiceCheckedOutBooks = user.getCheckedOutBooks();
+                Iterator<Book> iter = choiceCheckedOutBooks.iterator();
                 while (iter.hasNext()) {
                     Book book = iter.next();
                     if (book.getId() == bookID) {
@@ -108,7 +108,7 @@ public class User extends Person{
                         book.setCheckedOut(false);
                         book.setCheckedOutBy("");
                         iter.remove();
-                        user.setCheckedOutBooks(checkedOutBooks);
+                        user.setCheckedOutBooks(choiceCheckedOutBooks);
                         bookFound = true;
                         break;
                     }
@@ -119,13 +119,13 @@ public class User extends Person{
                 break;
             }
             case 6 -> {
-                checkedOutBooks = user.getCheckedOutBooks();
-                for (Book book: checkedOutBooks) {
+                choiceCheckedOutBooks = user.getCheckedOutBooks();
+                for (Book book: choiceCheckedOutBooks) {
                     book.setCheckedOut(false);
                     book.setCheckedOutBy("");
                 }
-                checkedOutBooks.clear();
-                user.setCheckedOutBooks(checkedOutBooks);
+                choiceCheckedOutBooks.clear();
+                user.setCheckedOutBooks(choiceCheckedOutBooks);
                 break;
             }
             case 7 -> {

@@ -1,7 +1,8 @@
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Admin extends Person {
+    private static int nextId = 1;
+
     public Admin(String firstName, String lastName, String address, String phoneNumber, String username, String passwordHash, Role role) {
         super(firstName, lastName, address, phoneNumber, username, passwordHash, role);
     }
@@ -21,10 +22,8 @@ public class Admin extends Person {
     }
 
 
-    public int handleAdminChoice(Library myLibrary, Scanner scnr, int adminChoice) {
-        WorkerInfo workerInfo;
+    public int handleAdminChoice(HashMap<String, Person> people, Library myLibrary, Scanner scnr, int adminChoice) {
         BookInfo bookInfo;
-        String fullName;
         Map<String, Clerk> mapClerks;
         Map<String, Librarian> mapLibrarians;
         int count;
@@ -34,30 +33,26 @@ public class Admin extends Person {
                 System.out.println("-----------------------------------------"); // 41 -s
                 System.out.println("\t\tAdd a Clerk");
                 System.out.println("-----------------------------------------");
-                workerInfo = getWorkerInfo(scnr);
-                Clerk newClerk = new Clerk(workerInfo);
+                Clerk newClerk = Clerk.createClerk(people, scnr); 
                 mapClerks = myLibrary.getMapClerks();
-                fullName = workerInfo.getFirstName() + " " + workerInfo.getLastName();
-                mapClerks.put(fullName, newClerk);
+                mapClerks.put(newClerk.getUsername(), newClerk);
                 break;
             }
             case 2 -> {
                 System.out.println("-----------------------------------------"); // 41 -s
                 System.out.println("\t\tAdd a Librarian");
                 System.out.println("-----------------------------------------");
-                workerInfo = getWorkerInfo(scnr);
-                Librarian newLibrarian = new Librarian(workerInfo);
+                Librarian newLibrarian = Librarian.createLibrarian(people, scnr);
                 mapLibrarians = myLibrary.getMapLibrarians();
-                fullName = workerInfo.getFirstName() + " " + workerInfo.getLastName();
-                mapLibrarians.put(fullName, newLibrarian);
+                mapLibrarians.put(newLibrarian.getUsername(), newLibrarian);
                 break;
             }
             case 3 -> {
                 System.out.println("-----------------------------------------"); // 41 -s
                 System.out.println("\t\tAdd a Book");
                 System.out.println("-----------------------------------------");
-                bookInfo = getBookInfo(scnr);
-                Book newBook = new Book(0, bookInfo, 0, null, false, "");
+                bookInfo = BookInfo.getBookInfo(scnr);
+                Book newBook = new Book(nextId++, bookInfo, 0, null, false, "");
                 myLibrary.addBook(newBook);
                 break;
             }

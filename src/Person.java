@@ -26,7 +26,7 @@ public class Person {
         return BCrypt.checkpw(passwordHash, this.passwordHash);
     }
 
-    public Person createAccount(HashMap<String, Person> people, Scanner scnr, Role role) {
+    public static Person createAccount(HashMap<String, Person> people, Scanner scnr, Role role) {
         String[] accountInfo = getUserPass(people, scnr);
         String inputUsername = accountInfo[0];
         String inputPasswordHash = accountInfo[1];
@@ -51,13 +51,13 @@ public class Person {
         }
     }
 
-    public String[] getUserPass(HashMap<String, Person> people, Scanner scnr) {
+    public static String[] getUserPass(HashMap<String, Person> people, Scanner scnr) {
         String inputUsername;
         while(true) {
             try {
                 System.out.println("Enter a username: ");
                 inputUsername = scnr.next();
-                if (!people.containsKey(username)) { break; }
+                if (!people.containsKey(inputUsername)) { break; }
                 else { System.out.println("Username taken. Please try again."); }
             } catch (Exception e) {
                 System.out.println("Invalid input detected. Please try again.");

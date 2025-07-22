@@ -52,7 +52,7 @@ public class BookInfo {
         this.numPages = numPages;
     }
 
-    public BookInfo getBookInfo(Scanner scnr) {
+    public static BookInfo getBookInfo(Scanner scnr) {
         while (true) {
             try {
                 scnr.nextLine();
