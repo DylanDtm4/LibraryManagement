@@ -14,9 +14,9 @@ public class Admin extends Person {
         System.out.println("Following functionalities are available:\n");
         System.out.println("1- Add Clerk");
         System.out.println("2- Add Librarian");
-        System.out.println("3- Add Book");
-        System.out.println("4- View All Issued Books in Library");
-        System.out.println("5- View All Books in Library");
+        System.out.println("3- Add Book");                              // remove and give only to librarian
+        System.out.println("4- View All Issued Books in Library");      // remove and give only to librarian
+        System.out.println("5- View All Books in Library");             // remove and give only to librarian & create a set pay for employee ID
         System.out.println("6- Logout");
         System.out.println("-----------------------------------------\n");
         System.out.println("Enter choice: ");

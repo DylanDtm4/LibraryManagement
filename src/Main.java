@@ -14,15 +14,18 @@ public class Main {
         int startChoice = 0;
         int userChoice = 0;
         int adminChoice = 0;
+        int librarianChoice = 0;
+        int clerkChoice = 0;
         boolean adminLogin = false;
         boolean userLogin = false;
-        String username = "";
-        String password = "";
-        Person userInfo;
+        boolean librarianLogin = false;
+        boolean clerkLogin = false;
+        String username;
+        String password;
         System.out.println("-----------------------------------------"); // 41 -s
         System.out.println("  Welcome to Library Management System");
         System.out.println("-----------------------------------------");
-        while (startChoice != 5) {
+        while (startChoice != 7) {
             startChoice = printStartMenu(scnr);
             switch(startChoice) {
                 case 1 -> {
@@ -42,7 +45,7 @@ public class Main {
                         System.out.println("This person is not a User.");
                     }
 
-                    if (existingUser != null && BCrypt.checkpw(password, existingUser.getPasswordHash())) {
+                    if (existingUser != null && existingUser.login(username, password)) {
                         userLogin = true;
                         user = existingUser;                       
                         System.out.println("Login successful");
@@ -53,10 +56,12 @@ public class Main {
 
                     while (userLogin) {
                         System.out.println();
-                        userChoice = user.printUserMenu(scnr);
-                        if (user.handleUserChoice(user, myLibrary, scnr, userChoice) == -1) {
-                            userLogin = false;
-                            user = null;
+                        if (user != null) {
+                            userChoice = user.printUserMenu(scnr);
+                            if (user.handleUserChoice(user, myLibrary, scnr, userChoice) == -1) {
+                                userLogin = false;
+                                user = null;
+                            }
                         }
                     }
                     break;
@@ -75,9 +80,9 @@ public class Main {
                     if (person instanceof Admin admin1) {
                         existingAdmin = admin1;
                     } else {
-                        System.out.println("This person is not a User.");
+                        System.out.println("This person is not a Admin.");
                     }
-                    if (existingAdmin != null && BCrypt.checkpw(password, existingAdmin.getPasswordHash())) {
+                    if (existingAdmin != null && existingAdmin.login(username, password)) {
                         adminLogin = true;
                         admin = existingAdmin;
                         System.out.println("Login successful");
@@ -87,15 +92,91 @@ public class Main {
                     }
                     while (adminLogin == true) {
                         System.out.println();
-                        adminChoice = admin.printAdminMenu(scnr);
-                        if (admin.handleAdminChoice(people, myLibrary, scnr, adminChoice) == -1) {
-                            adminLogin = false;
-                            admin = null;
+                        if (admin != null) {
+                            adminChoice = admin.printAdminMenu(scnr);
+                            if (admin.handleAdminChoice(people, myLibrary, scnr, adminChoice) == -1) {
+                                adminLogin = false;
+                                admin = null;
+                            }
                         }
                     }
                     break;
                 }
                 case 3 -> {
+                    Librarian existingLibrarian = null;
+                    System.out.println("-----------------------------------------"); // 41 -s
+                    System.out.println("\tEnter your credentials");
+                    System.out.println("-----------------------------------------");
+                    System.out.print("Username: ");
+                    username = scnr.next();
+                    System.out.print("Password: ");
+                    password = scnr.next();
+
+                    Person person = people.get(username);
+                    if (person instanceof Librarian librarian1) {
+                        existingLibrarian = librarian1;
+                    } else {
+                        System.out.println("This person is not a Librarian.");
+                    }
+
+                    if (existingLibrarian != null && existingLibrarian.login(username, password)) {
+                        librarianLogin = true;
+                        librarian = existingLibrarian;                       
+                        System.out.println("Login successful");
+                    }
+                    else {
+                        System.out.println("Login failed.");
+                    }
+
+                    while (librarianLogin) {
+                        System.out.println();
+                        if (librarian != null) {
+                            librarianChoice = librarian.printLibrarianMenu(scnr);
+                            if (librarian.handleLibrarianChoice(librarian, myLibrary, scnr, librarianChoice) == -1) {
+                                librarianLogin = false;
+                                librarian = null;
+                            }
+                        }
+                    }
+                    break;
+                }
+                case 4 -> {
+                    Clerk existingClerk = null;
+                    System.out.println("-----------------------------------------"); // 41 -s
+                    System.out.println("\tEnter your credentials");
+                    System.out.println("-----------------------------------------");
+                    System.out.print("Username: ");
+                    username = scnr.next();
+                    System.out.print("Password: ");
+                    password = scnr.next();
+
+                    Person person = people.get(username);
+                    if (person instanceof Clerk clerk1) {
+                        existingClerk = clerk1;
+                    } else {
+                        System.out.println("This person is not a Clerk.");
+                    }
+                    if (existingClerk != null && existingClerk.login(username, password)) {
+                        clerkLogin = true;
+                        clerk = existingClerk;
+                        System.out.println("Login successful");
+                    }
+                    else {
+                        System.out.println("Login failed.");
+                    }
+                    while (clerkLogin == true) {
+                        System.out.println();
+                        if (clerk != null) {
+                            clerkChoice = clerk.printClerkMenu(scnr);
+                            if (clerk.handleClerkChoice(people, myLibrary, scnr, clerkChoice) == -1) {
+                                clerkLogin = false;
+                                clerk = null;
+                            }
+                        }
+                    }
+                    break;
+                }
+                case 5 -> {
                     System.out.println("-----------------------------------------"); // 41 -s
                     System.out.println("\tCreate A User Account");
                     System.out.println("-----------------------------------------");
@@ -105,7 +186,7 @@ public class Main {
                     System.out.println("User Account Created!");
                     break;
                 }
-                case 4 -> {
+                case 6 -> {
                     System.out.println("-----------------------------------------"); // 41 -s
                     System.out.println("\tCreate A Admin Account");
                     System.out.println("-----------------------------------------");
@@ -115,7 +196,7 @@ public class Main {
                     System.out.println("Admin Account Created!");
                     break;
                 }
-                case 5 -> {
+                case 7 -> {
                     break;
                 }
                 default -> System.out.println("Invalid value detected. Please try again.");
@@ -132,9 +213,11 @@ public class Main {
         System.out.println("Following functionalities are available:\n");
         System.out.println("1- Login As User");
         System.out.println("2- Login As Admin");
-        System.out.println("3- Create A User Account");
-        System.out.println("4- Create A Admin Account");
-        System.out.println("5- Exit");
+        System.out.println("3- Login As Librarian");
+        System.out.println("4- Login As Clerk");
+        System.out.println("5- Create A User Account");
+        System.out.println("6- Create A Admin Account");
+        System.out.println("7- Exit");
         System.out.println("-----------------------------------------\n");
         System.out.println("Enter choice: ");
         int startChoice = scnr.nextInt();
