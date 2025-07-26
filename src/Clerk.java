@@ -44,9 +44,12 @@ public class Clerk extends Person {
         System.out.println("2- View All Books");
         System.out.println("3- View All Checked out Books");
         System.out.println("4- Checkout Book");
-        System.out.println("5- Reshelf Books");
+        System.out.println("5- Return Book");
         System.out.println("6- Return All Books");
-        System.out.println("7- Logout");
+        System.out.println("7- Add New Book");
+        System.out.println("8- Edit Book Information");
+        System.out.println("9- Create User Account");
+        System.out.println("10- Logout");
         System.out.println("-----------------------------------------\n");
         System.out.println("Enter choice: ");
         int clerkChoice = scnr.nextInt();

@@ -29,7 +29,7 @@ public class Book {
         this.checkedOutBy = checkedOutBy;
     }
     
-    public int getId() {
+    public int getID() {
         return id;
     }
 

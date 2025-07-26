@@ -135,4 +135,9 @@ public class Person {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s is a %s", getFirstName(), getLastName(), getRole());
+    }
 }

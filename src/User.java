@@ -20,11 +20,25 @@ public class User extends Person{
         this.checkedOutBooks = checkedOutBooks;
     }
 
+    public static User createUser(HashMap<String, Person> people, Scanner scnr) {
+        Person newUserBase = Person.createAccount(people, scnr, Role.USER);
+        return new User(
+            newUserBase.getFirstName(),
+            newUserBase.getLastName(),
+            newUserBase.getAddress(),
+            newUserBase.getPhoneNumber(),
+            newUserBase.getUsername(),
+            newUserBase.getPasswordHash(),
+            Role.USER,
+            new ArrayList<>()
+        );
+    }
+
     public int printUserMenu(Scanner scnr) {
         System.out.println("Following functionalities are available:\n");
         System.out.println("1- View Book");
         System.out.println("2- View All Books");
-        System.out.println("3- View All Checked out Books");
+        System.out.println("3- View My Checked out Books");
         System.out.println("4- Checkout Book");
         System.out.println("5- Return Book");
         System.out.println("6- Return All Books");
@@ -46,7 +60,7 @@ public class User extends Person{
                 bookFound = false;
                 bookID = Book.getBookID(scnr);
                 for (Book book : myLibrary.getListBooks()) {
-                    if (book.getId() == bookID) {
+                    if (book.getID() == bookID) {
                         System.out.println(book.toString());
                         bookFound = true;
                         break;
@@ -80,8 +94,8 @@ public class User extends Person{
                 bookID = Book.getBookID(scnr);
                 LocalDate dueDate = LocalDate.now().plusDays(30);
                 for (Book book : myLibrary.getListBooks()) {
-                    if (book.getId() == bookID && book.isCheckedOut() == true) isCheckedOut = true;
-                    else if (book.getId() == bookID && book.isCheckedOut() == false) {
+                    if (book.getID() == bookID && book.isCheckedOut() == true) isCheckedOut = true;
+                    else if (book.getID() == bookID && book.isCheckedOut() == false) {
                         book.setDueDate(dueDate);
                         book.setCheckedOut(true);
                         book.setCheckedOutBy(user.getUsername());
@@ -107,7 +121,7 @@ public class User extends Person{
                 Iterator<Book> iter = choiceCheckedOutBooks.iterator();
                 while (iter.hasNext()) {
                     Book book = iter.next();
-                    if (book.getId() == bookID) {
+                    if (book.getID() == bookID) {
                         book.setDueDate(null);
                         book.setCheckedOut(false);
                         book.setCheckedOutBy("");
